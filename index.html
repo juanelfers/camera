@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+        }
+
+        video {
+            width: 100vw;
+            height: 100vh;
+            animation: gray 2s infinite, opacity 10s infinite;
+        }
+
+        @keyframes gray {
+            0% {
+                filter: grayscale(1)
+            }
+            50% {
+                filter: grayscale(0)
+            }
+            100% {
+                filter: grayscale(1)
+            }
+        }
+        @keyframes opacity {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <video src=""></video>
+
+    <script>
+        const constraints = {
+            audio: true,
+            video: { width: window.innerWidth, height: window.innerHeight },
+        };
+
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then((mediaStream) => {
+                const video = document.querySelector("video");
+                video.srcObject = mediaStream;
+                video.onloadedmetadata = () => {
+                    video.play();
+                };
+            })
+            .catch((err) => {
+                // always check for errors at the end.
+                console.error(`${err.name}: ${err.message}`);
+            });
+    </script>
+</body>
+
+</html>
